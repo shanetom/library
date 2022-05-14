@@ -3,6 +3,12 @@ let myLibary = [];
 // Book class
 class Book {
     constructor(title, author, pages, isRead) {
+        if (isRead === "on") {
+            isRead = true;
+        } else {
+            isRead = false;
+        }
+
         this.title = title;
         this.author = author;
         this.pages = pages;
@@ -35,6 +41,7 @@ class UI {
         `;
 
         list.appendChild(row);
+        myLibary.push(book);
     }
 
     static deleteBook(element) {
@@ -64,9 +71,6 @@ document.querySelector('#book-form').addEventListener('submit', (e) => {
     const author = document.querySelector('#author').value;
     const pages = document.querySelector('#pages').value;
     const isRead = document.querySelector('#isRead').value;
-
-    // Validate 
-
 
     const book = new Book(title, author, pages, isRead);
     UI.addBookToLibrary(book);
