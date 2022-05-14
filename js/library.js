@@ -1,4 +1,6 @@
+let myLibary = [];
 
+// Book class
 class Book {
     constructor(title, author, pages, isRead) {
         this.title = title;
@@ -13,20 +15,10 @@ class Book {
     }
 }
 
-function addBookToLibrary() {
-    //ToDo: add code to take user input and store the book into the array
-}
-
-// Book class
-
-
 // UI class
 class UI {
     static displayBooks() {
-        const StoredBooks = [];
-        const books = StoredBooks;
-
-        books.forEach((book) => UI.addBookToLibrary(book));
+        myLibary.forEach((book) => UI.addBookToLibrary(book));
     }
 
     static addBookToLibrary(book) {
@@ -44,13 +36,46 @@ class UI {
 
         list.appendChild(row);
     }
-}
 
-// Store class
+    static deleteBook(element) {
+        if (element.classList.contains('delete')) {
+            element.parentElement.parentElement.remove();
+        }
+    }
+
+    static clearFields() {
+        document.querySelector('#title').value = '';
+        document.querySelector('#author').value = '';
+        document.querySelector('#pages').value = '';
+        document.querySelector('#isRead').checked = false;
+    }
+}
 
 // Event display books
 document.addEventListener('DOMContentLoaded', UI.displayBooks());
 
 // Event add a book
+document.querySelector('#book-form').addEventListener('submit', (e) => {
+    // prevent actual submit event
+    e.preventDefault();
+
+    // Get form values
+    const title = document.querySelector('#title').value;
+    const author = document.querySelector('#author').value;
+    const pages = document.querySelector('#pages').value;
+    const isRead = document.querySelector('#isRead').value;
+
+    // Validate 
+
+
+    const book = new Book(title, author, pages, isRead);
+    UI.addBookToLibrary(book);
+
+    // clear fields on the page
+    UI.clearFields();
+});
 
 // Remove a book
+document.querySelector('#book-list').addEventListener('click', (e) => {
+    UI.deleteBook(e.target)
+});
