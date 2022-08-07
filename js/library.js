@@ -72,12 +72,26 @@ document.querySelector('#book-form').addEventListener('submit', (e) => {
     const pages = document.querySelector('#pages').value;
     const isRead = document.querySelector('#isRead').value;
 
-    const book = new Book(title, author, pages, isRead);
-    UI.addBookToLibrary(book);
+    const isValidBook = validateForm(title, author, pages);
+
+    if (isValidBook) {
+        const book = new Book(title, author, pages, isRead);
+        UI.addBookToLibrary(book);
+    }
 
     // clear fields on the page
     UI.clearFields();
 });
+
+// Check for any missing fields
+function validateForm(title, author, pages) {
+    if (title == '' || author == '' || pages == 0) {
+        alert("Missing parameters. Please fill out all fields.");
+        return false;
+    } else {
+        return true;
+    }
+}
 
 // Remove a book
 document.querySelector('#book-list').addEventListener('click', (e) => {
